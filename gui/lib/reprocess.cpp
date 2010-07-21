@@ -33,7 +33,7 @@ SepEffDict getSepEff(Template temp, File name)
 	  {
 	    if ( mapBegin->first.find("SE_") == 0 )
 	      {	
-		sep[isoname::LLAAAM_2_zzaaam(mapBegin->first.substr(mapBegin->first.find_first_not_of( "SE_")))] = temp.GetFloatVal(mapBegin->second);
+		sep[isoname::LLzz[(mapBegin->first.substr(mapBegin->first.find_first_not_of( "SE_")))]] = temp.GetFloatVal(mapBegin->second);
 	      }		
 	    mapBegin++;
 	  }
@@ -47,6 +47,8 @@ SepEffDict getSepEff(Template temp, File name)
 /*-------------------------------------------*/
 int main()
 {
+	//(char*)(PWD + (string)"Rep_Input.txt").c_str()
+	string PWD = getenv("PWD");
 
 	FCComps::write_text = 0;
 	FCComps::write_hdf5 = 1;
@@ -56,7 +58,6 @@ int main()
 	Template temp;
 	mapType m;
 	m=temp.readFile(repInput);
-
 	SepEffDict sepeff = getSepEff(temp, repInput);
 
 	cout << endl;
@@ -67,7 +68,6 @@ int main()
 
 	File load = "load.txt";
 	FCComps::load_isos2track_text(load);
-	
 
 // Get the MassStream :
 
@@ -75,10 +75,12 @@ int main()
 
 	if (m["IsosIn_type"].compare("text") == 0)
 		{
+			//(char*)m["IsosIn"].c_str())
 			inStream.load_from_text((char*)m["IsosIn"].c_str());
 		}
 	else if (m["IsosIn_type"].compare("hdf5") == 0)
-		{
+		{	
+			//m[PWD + "IsosIn"]
 			inStream.load_from_hdf5(m["IsosIn"], "/IsosOut");
 		}
 

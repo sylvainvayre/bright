@@ -1,0 +1,5 @@
+SE_U 0.99
+SE_PU 0.99
+IsosIn MS_Input.txt
+IsosIn_type text
+PassNumber 0
